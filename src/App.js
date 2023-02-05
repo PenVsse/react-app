@@ -1,19 +1,43 @@
 import logo from "./logo.svg";
 import "./App.css";
+import Nav from "./views/Nav";
+import { useState } from 'react';
+import Todo from "./views/Todo";
 
 function App() {
-  let name = 'phu';
-  let number = 2022;
-  let obj = { name: 'react', id: '1' }
-  let link = 'https://www.youtube.com/watch?v=Y9gTouaZJ5s&list=PLncHg6Kn2JT4xzJyhXfmJ53dzwVbq-S_E&index=9&ab_channel=H%E1%BB%8FiD%C3%A2nIT';
+  let [name, setName] = useState('phu');
+  const [address, setAddress] = useState('');
+  const [todos, setTodos] = useState([
+    { id: '1', title: 'xem pen' },
+    { id: '2', title: 'xem phu' }
+
+  ]);
+
+  const handleEventClick = (event) => {
+    if (!address) {
+      alert('empty input')
+      return;
+    }
+    let newTodo = { id: 'asd', title: address }
+    setTodos([...todos, newTodo])
+    setAddress('')
+  }
+  const handleOnChange = (event) => {
+    setAddress(event.target.value)
+  }
   return (
     <div className="App">
-      {console.log(obj)}
+      <Nav />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello id: {obj.id} name {name} in {number}
-        </p>
-        <a href={link}> link ne</a>
+        <h1>
+          hello {name}
+        </h1>
+        <Todo data={todos} />
+        <input type='text' value={address} onChange={(event) => handleOnChange(event)}></input>
+        <button type="button" onClick={(event) => handleEventClick(event)}>
+          Click Me
+        </button>
 
       </header>
     </div>
